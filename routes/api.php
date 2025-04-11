@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ObraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProgressOfWorkController;
@@ -33,3 +35,10 @@ Route::apiResource('users', 'App\Http\Controllers\UserController')->only([
     'update',
     'destroy'
 ]);
+
+Route::apiResource('obra', ObraController::class)->except(['edit', 'create'])->middleware('logged')->missing(function (Request $request){
+    return response()->json(['message' => 'Obra não encontrada!'], 404);
+});
+Route::apiResource('cliente', ClienteController::class)->except(['edit', 'create'])->middleware('logged')->missing(function(Request $request){
+    return response()->json(['message' => 'Cliente não encontrado'], 404);
+});
