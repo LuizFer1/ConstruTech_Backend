@@ -16,11 +16,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'type' => 1,
             "password" => Hash::make("12345678")
         ]);
+        User::factory(20)->create();
+
+        $this->call([
+            StatusSeeder::class,
+            ClienteSeeder::class,
+            ObraSeeder::class
+        ]);
+
     }
 }
