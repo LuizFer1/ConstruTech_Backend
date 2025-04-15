@@ -13,3 +13,7 @@ Route::apiResource('users', 'App\Http\Controllers\UserController')->only([
 ]);
 
 Route::apiResource('colaboradores', ColaboradorController::class);
+
+Route::fallback(function () {
+    return response()->json(['message' => 'Rota não encontrada'], 404);
+});
