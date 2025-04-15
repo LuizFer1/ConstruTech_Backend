@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,17 +28,13 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call([
-            ColaboradorSeeder::class,
-            'type' => 1,
-            "password" => Hash::make("12345678")
-        ]);
         User::factory(20)->create();
 
         $this->call([
             StatusSeeder::class,
             ClienteSeeder::class,
-            ObraSeeder::class
+            ObraSeeder::class,
+            ColaboradorSeeder::class
         ]);
 
     }

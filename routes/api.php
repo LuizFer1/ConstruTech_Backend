@@ -15,6 +15,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('me', [AuthController::class,'me']);
 })->middleware('logged');
 
+Route::apiResource('colaboradores', ColaboradorController::class);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
