@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => bcrypt('password'),
                 'remember_token' => Str::random(10),
-                'type' => 'admin',
+                'type' => 2,
             ]
         );
 
@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StatusSeeder::class,
             ClienteSeeder::class,
-            ObraSeeder::class,
-            ColaboradorSeeder::class
+            ColaboradorSeeder::class,
+            ObraSeeder::class
         ]);
 
     }

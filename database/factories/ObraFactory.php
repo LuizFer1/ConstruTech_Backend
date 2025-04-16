@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 use App\Models\Status;
 use App\Models\Cliente;
+use App\Models\Colaborador;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Obra>
@@ -23,10 +24,12 @@ class ObraFactory extends Factory
         $users = User::all()->pluck('id');
         $clientes = Cliente::all()->pluck('id');
         $status = Status::all()->pluck('id');
+        $colaboradores = Colaborador::all()->pluck('id');
 
         return [
             'nome' => fake('pt_BR')->company,
-            'responsavel_id' => fake()->randomElement($users),
+            'construtor_id' => fake()->randomElement($users),
+            'responsavel_id' => fake()->randomElement($colaboradores),
             'cliente_id' => fake()->randomElement($clientes),
             'status_id' => fake()->randomElement($status),
             'andamento' => fake()->randomNumber(2, true),
