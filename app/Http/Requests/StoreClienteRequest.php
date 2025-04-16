@@ -22,7 +22,7 @@ class StoreClienteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|min:20',
+            'nome' => 'required|min:10',
             'data_nascimento' => 'date',
             'cpf_cnpj' => 'cpf_ou_cnpj',
             'telefone' => 'celular_com_ddd',

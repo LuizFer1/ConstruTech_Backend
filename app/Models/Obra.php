@@ -28,6 +28,7 @@ class Obra extends Model
     protected $fillable = [
         'nome',
         'responsavel_id',
+        'construtor_id',
         'cliente_id',
         'status_id',
         'andamento',
@@ -40,15 +41,19 @@ class Obra extends Model
 
     protected $with = [
         'responsavel',
+        'construtor',
         'cliente',
         'status'
     ];
 
-
+    public function construtor(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function responsavel(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Colaborador::class);
     }
 
     public function cliente(): BelongsTo

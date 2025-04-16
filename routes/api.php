@@ -17,6 +17,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::apiResource('colaboradores', ColaboradorController::class);
 
+Route::apiResource('obras', ObraController::class)->middleware('logged');
+
+Route::apiResource('clientes', ClienteController::class);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -31,21 +35,5 @@ Route::group(['prefix' => 'progressOfWork'], function () {
 });
 
 Route::apiResource('users', 'App\Http\Controllers\UserController')->only([
-    'index',
-    'store',
-    'show',
-    'update',
-    'destroy'
+    'index', 'store', 'show', 'update', 'destroy'
 ]);
-
-Route::apiResource('obra', ObraController::class)->except(['edit', 'create'])->middleware('logged')->missing(function (Request $request) {
-    return response()->json(['message' => 'Obra não encontrada!'], 404);
-});
-Route::apiResource('cliente', ClienteController::class)->except(['edit', 'create'])->middleware('logged')->missing(function (Request $request) {
-    return response()->json(['message' => 'Cliente não encontrado'], 404);
-});
-Route::apiResource('colaboradores', ColaboradorController::class);
-
-Route::fallback(function () {
-    return response()->json(['message' => 'Rota não encontrada'], 404);
-});

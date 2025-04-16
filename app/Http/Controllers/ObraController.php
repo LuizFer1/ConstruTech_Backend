@@ -4,18 +4,26 @@ namespace App\Http\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Obra;
 use App\Http\Requests\UpdateObraRequest;
 use App\Http\Requests\StoreObraRequest;
 
 class ObraController extends Controller
 {
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user = auth('api')->user();
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = Obra::query();
+        $query = Obra::query()->where('construtor_id', $this->user->id);
 
         if ($request->has('status')) {
             $query->whereHas('status', function ($q) use ($request) {
@@ -32,6 +40,7 @@ class ObraController extends Controller
     public function store(StoreObraRequest $request)
     {
         $data = $request->all();
+        $data['construtor_id'] = $this->user->id;
         $obra = Obra::create($data);
         return response()->json($obra, Response::HTTP_CREATED);
     }
@@ -49,6 +58,9 @@ class ObraController extends Controller
      */
     public function update(UpdateObraRequest $request, Obra $obra)
     {
+        if ($obra->contrutor_id != $this->user->id) {
+            return response()->json(['message' => 'Você não tem permissão para editar esta obra.'], 403);
+        };
         $data = $request->all();
         $obra->update($data);
         $obra->save();
@@ -61,6 +73,9 @@ class ObraController extends Controller
      */
     public function destroy(Obra $obra)
     {
+        if ($obra->contrutor_id != $this->user->id) {
+            return response()->json(['message' => 'Você não tem permissão para editar esta obra.'], 403);
+        };
         $obra->delete();
         return response()->json($obra, Response::HTTP_OK);
     }
