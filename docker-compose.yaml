@@ -17,14 +17,15 @@ services:
       - mysql
 
   mysql:
-    image: mysql:8.0
+    image: mysql:latest
     container_name: construtech-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: construtech
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3360
     ports:
-      - "3306:3306"
+      - "3360:3360"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:

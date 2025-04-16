@@ -2,7 +2,7 @@
 
 # Aguardar MySQL ficar disponível
 echo "Aguardando MySQL..."
-while ! nc -z mysql 3306; do
+while ! nc -z mysql 3360; do
   sleep 1
 done
 echo "MySQL pronto!"
