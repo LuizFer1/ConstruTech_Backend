@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('password');
-            $table->integer('type')->comment('1: Company, 2: Manager');
+            $table->enum('tipo_de_usuario', ['admin', 'engenheiro', 'gestor', 'operario'])->default('cliente');;
             $table->string('squad_uuid')->nullable();
             $table->string('company_uuid')->nullable();
             $table->rememberToken();
