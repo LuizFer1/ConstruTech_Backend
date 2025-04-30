@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,11 +17,25 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'type' => 1,
-            "password" => Hash::make("12345678")
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'email_verified_at' => now(),
+                'password' => bcrypt('12345678'),
+                'remember_token' => Str::random(10),
+                'type' => 2,
+            ]
+        );
+
+        User::factory(20)->create();
+
+        $this->call([
+            StatusSeeder::class,
+            ClienteSeeder::class,
+            ColaboradorSeeder::class,
+            ObraSeeder::class
         ]);
+
     }
 }

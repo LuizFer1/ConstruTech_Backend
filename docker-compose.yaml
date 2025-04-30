@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: construtech-app
+    restart: unless-stopped
+    working_dir: /var/www
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+      - /var/www/vendor
+    networks:
+      - construtech-network
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: construtech-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: construtech
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3360
+    ports:
+      - "3360:3360"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - construtech-network
+
+volumes:
+  mysql_data:
+
+networks:
+  construtech-network:
+    driver: bridge
