@@ -17,6 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::apiResource('colaboradores', ColaboradorController::class);
 
+
 Route::apiResource('obras', ObraController::class)->middleware('logged');
 
 Route::apiResource('clientes', ClienteController::class);

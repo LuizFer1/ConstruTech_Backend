@@ -1,0 +1,21 @@
+meta {
+  name: register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Aristoteles",
+    "email": "aristotele3s@gmail.com",
+    "phone": "8798811529",
+    "password": "macacos_me_mordam",
+    "type": "1"
+  }
+}
