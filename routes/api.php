@@ -7,6 +7,8 @@ use App\Http\Controllers\ObraController;
 use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EtapaController;
+use App\Http\Controllers\TarefaController;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::group(['prefix' => 'auth'], function () {
@@ -21,6 +23,10 @@ Route::apiResource('colaboradores', ColaboradorController::class);
 Route::apiResource('obras', ObraController::class)->middleware('logged');
 
 Route::apiResource('clientes', ClienteController::class);
+
+Route::apiResource('etapas', EtapaController::class)->middleware('logged');
+
+Route::apiResource('tarefas', TarefaController::class)->middleware('logged');
 
 Route::get('/user', function (Request $request) {
     return $request->user();

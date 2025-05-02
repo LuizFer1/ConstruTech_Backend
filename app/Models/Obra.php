@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Obra extends Model
 {
@@ -13,11 +15,12 @@ class Obra extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected static function boot(){
+    protected static function boot()
+    {
         parent::boot();
-        static::creating(function ($obra){
+        static::creating(function ($obra) {
             //Se foi setado status, não coloca como pendente
-            if($obra->status_id){
+            if ($obra->status_id) {
                 return;
             }
             $statusPendente = Status::where('nome', 'Pendente')->first();
@@ -65,4 +68,15 @@ class Obra extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function etapas(): HasMany
+    {
+        return $this->hasMany(Etapa::class);
+    }
+
+    public function tarefas(): HasManyThrough
+    {
+        return $this->hasManyThrough(Tarefa::class, Etapa::class);
+    }
+
 }
