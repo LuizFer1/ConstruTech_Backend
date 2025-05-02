@@ -1,0 +1,22 @@
+meta {
+  name: refresh
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/api/auth/refresh
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NDYxNDI4NDMsImV4cCI6MTc0NjE0NjQ0MywibmJmIjoxNzQ2MTQyODQzLCJqdGkiOiJ4bFNJUm5TSXdGVXNLSkNiIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ0eXBlIjoxfQ.7AM6ZsG7kXqz1LkP1DAVwZWcI5phhNWoJcIsJ3pV-NU
+}
+
+body:json {
+  {
+    "email": "aristoteles@gmail.com",
+    "password": "macacos_me_mordam"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "colections-pi-eng-software",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

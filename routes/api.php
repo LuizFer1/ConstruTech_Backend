@@ -17,6 +17,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::apiResource('colaboradores', ColaboradorController::class);
 
+
 Route::apiResource('obras', ObraController::class)->middleware('logged');
 
 Route::apiResource('clientes', ClienteController::class);
@@ -26,7 +27,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::group(['prefix' => 'progressOfWork'], function () {
+Route::group(['prefix' => 'progressOfWork', 'middleware' => 'logged'], function () {
     Route::get('/', 'App\Http\Controllers\ProgressOfWorkController@index');
     Route::get('/{id}', 'App\Http\Controllers\ProgressOfWorkController@show');
     Route::post('/', 'App\Http\Controllers\ProgressOfWorkController@store');
