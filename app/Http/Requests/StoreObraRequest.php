@@ -29,8 +29,8 @@ class StoreObraRequest extends FormRequest
             'andamento' => 'min:0|max:100',
             'data_inicio' => 'date',
             'data_fim_previsto' => 'date',
-            'data_fim' => 'date',
-            'data_arquivamento' => 'date',
+            'data_fim' => 'nullable|date',
+            'data_arquivamento' => 'nullable|date',
             'orcamento' => 'min:0|integer'
         ];
     }

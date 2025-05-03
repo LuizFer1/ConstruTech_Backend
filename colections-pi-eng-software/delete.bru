@@ -5,7 +5,11 @@ meta {
 }
 
 delete {
-  url: {{url}}/api/progressOfWork/1
+  url: {{url}}/api/progressOfWork/2
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NDYzMTM0NjgsImV4cCI6MTc0NjMxNzA2OCwibmJmIjoxNzQ2MzEzNDY4LCJqdGkiOiJ0ZGRzS01VbkdIb0FRZHZ1Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ0eXBlIjoxfQ.yrxlGcQjv7HnGEWWziYXZwdrYritAbh5AjEOaaaQYZM
 }

@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{url}}/api/progressOfWork/1
+  url: {{url}}/api/progressOfWork/601
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NDYyODE3NjAsImV4cCI6MTc0NjI4NTM2MCwibmJmIjoxNzQ2MjgxNzYwLCJqdGkiOiJ1djU1OHFLUzlBODRUN3M3Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ0eXBlIjoxfQ.eje5K_-YUIwVXmH8vQbeA3NgMJ6Z13d92xK7qgCX3Lg
 }

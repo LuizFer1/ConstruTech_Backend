@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
-        // User::firstOrCreate(
+        User::firstOrCreate(
         //     ['email' => 'test@example.com'],
         //     [
         //         'name' => 'Test User',
@@ -26,16 +26,16 @@ class DatabaseSeeder extends Seeder
         //         'remember_token' => Str::random(10),
         //         'type' => 2,
         //     ]
-        // );
+        );
 
-        // User::factory(20)->create();
+        User::factory(20)->create();
 
         $this->call([
-            // StatusSeeder::class,
-            // ClienteSeeder::class,
-            // ColaboradorSeeder::class,
-            // ObraSeeder::class,
-            MidiaAndamentoObraSeeder::class
+            StatusSeeder::class,
+            ClienteSeeder::class,
+            ColaboradorSeeder::class,
+            ObraSeeder::class,
+
         ]);
 
     }
