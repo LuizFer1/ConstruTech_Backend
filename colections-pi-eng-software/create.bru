@@ -7,17 +7,28 @@ meta {
 post {
   url: {{url}}/api/progressOfWork
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NDYyMjQ1ODcsImV4cCI6MTc0NjIyODE4NywibmJmIjoxNzQ2MjI0NTg3LCJqdGkiOiJNS05Hd213bGR4OXZCam1xIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ0eXBlIjoxfQ.jke1kWiWv-gMPnKUxX8yE8HPVmL0a6Aiz3B4BhPDCC4
 }
 
 body:json {
   {
-    "tipo_de_midia":"Video",
-    "arquivo_da_midia":"Video",
-    "data_do_registro":"2023-12-25",
-    "descricao":null,
-    "local_da_obra":"Video",
-    "responsavel_pelo_envio":"Video",
-    "id_obra": 1
+    "data_do_registro": "2025-05-02",
+    "id_obra": 6,
+    "id_responsavel": 4,
+    "descricao": "Descrição do andamento da obra",
+    "tempo_climatico": "Ensolarado",
+    "tempo_climatico_t_max": "30",
+    "tempo_climatico_t_min": "18",
+    "tempo_climatico_observacao": "Dia muito quente com algumas nuvens",
+    "servico_executado": "Pintura da fachada",
+    "etapa_frente": "Execução",
+    "atrasos": "Nenhum",
+    "visitas_tecnicas": "Sim",
+    "acidente": "Não",
+    "problemas_operacionais": "Não"
   }
 }

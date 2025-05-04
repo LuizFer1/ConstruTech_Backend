@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{url}}/api/users
+  url: {{url}}/api/obras
   body: json
   auth: bearer
 }
@@ -16,10 +16,15 @@ auth:bearer {
 
 body:json {
   {
-    "name": "Aristoteles",
-    "email": "aristotele43s@gmail.com",
-    "phone": "87988115529",
-    "password": "macacos_me_mordam",
-    "type": "1"
+    "nome": "Aristoteles",
+    "responsavel_id": "1",
+    "cliente_id": "1",
+    "status_id": "1",
+    "andamento": "0",
+    "data_inicio": "2025-05-02",
+    "data_fim_previsto": "2025-08-02",
+    "data_fim": null,
+    "data_arquivamento": null,
+    "orcamento": 350
   }
 }

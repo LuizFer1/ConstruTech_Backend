@@ -9,39 +9,44 @@ class ProgressOfWork extends Model
     // Define a tabela associada ao modelo
     protected $table = 'midia_andamento_obra';
 
-    protected $primaryKey = 'id_midia_andamento_obra'; // Exemplo: 'id_midia'
-
-    // Define os campos que podem ser preenchidos em massa
     protected $fillable = [
-        'tipo_de_midia', 
-        'arquivo_da_midia', 
-        'data_do_registro', 
-        'descricao', 
-        'local_da_obra', 
-        'responsavel_pelo_envio', 
-        'id_obra'
+        'id',
+        'data_do_registro',
+        'id_obra',
+        'id_responsavel',
+        'tempo_climatico',
+        'tempo_climatico_t_max',
+        'tempo_climatico_t_min',
+        'tempo_climatico_observacao',
+        'servico_executado',
+        'etapa_frente',
+        'atrasos',
+        'visitas_tecnicas',
+        'acidente',
+        'problemas_operacionais',
+        'descricao'
     ];
 
-    /**
-     * Relacionamento com a tabela 'obras'.
-     */
     public function obra()
     {
         return $this->belongsTo(Obra::class, 'id_obra');
     }
 
-    /**
-     * Método para buscar todos os registros com filtros e paginação.
-     */
+    public function colaborador()
+{
+    return $this->belongsTo(User::class, 'id_responsavel');
+}
 
-    public static function findAll(array $query = [])
+
+
+    public static function findAll(array $query = [], string $userId)
     {
+    
         $page = $query['page'] ?? 0;
         $limit = $query['limit'] ?? 10;
     
-        $builder = self::query();
-    
-        // Aplicação de filtros
+        $builder = self::query()->with(['obra', 'colaborador']);
+
         $filters = [
             'tipo_de_midia' => fn($value) => $builder->where('tipo_de_midia', $value),
             'arquivo_da_midia' => fn($value) => $builder->where('arquivo_da_midia', $value),
@@ -49,7 +54,7 @@ class ProgressOfWork extends Model
             'local_da_obra' => fn($value) => $builder->where('local_da_obra', $value),
             'responsavel_pelo_envio' => fn($value) => $builder->where('responsavel_pelo_envio', $value),
             'id_obra' => fn($value) => $builder->where('id_obra', $value),
-            'descricao' => fn($value) => $builder->where('descricao', 'like', '%' . $value . '%'), // Busca por texto que contém
+            'descricao' => fn($value) => $builder->where('descricao', 'like', '%' . $value . '%'), 
             'orderBy' => fn($value) => $builder->orderBy($value),
         ];
     
@@ -59,13 +64,20 @@ class ProgressOfWork extends Model
             }
         }
     
-        $total = $builder->count();
-    
+        $total = (clone $builder)
+        ->whereHas('obra', function ($query) use ($userId) {
+            $query->where('construtor_id', $userId);
+        })
+        ->count();
+        
         $data = $builder
-            ->offset($page * $limit)
-            ->limit($limit)
-            ->get();
-    
+        ->offset($page * $limit)
+        ->limit($limit)
+        ->whereHas('obra', function ($query) use ($userId) {
+            $query->where('construtor_id', $userId);
+        })
+        ->get();
+        
         return [
             'data' => $data,
             'page' => [
@@ -82,7 +94,7 @@ class ProgressOfWork extends Model
      */
     public static function findById($id)
     {
-        $item = self::query()->where('id_midia_andamento_obra', $id)->first();
+        $item = self::with('obra')->where('id', $id)->first();
         return $item ? $item : [];
     }
 
@@ -93,13 +105,14 @@ class ProgressOfWork extends Model
     }
     public function updateRecord(array $data)
     {
-        $id = $data['id_midia_andamento_obra'] ?? null;
+        
+        $id = $data['id'] ?? null;
     
         if (!$id) {
             return ['error' => 'ID não informado.'];
         }
     
-        $record = self::find($id);
+        $record = self::query()->where('id', $id)->first();
     
         if (!$record) {
             return ['error' => 'Registro não encontrado.'];

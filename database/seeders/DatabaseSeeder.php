@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             EtapaSeeder::class,
             TarefaSeeder::class,
             MidiaAndamentoObraSeeder::class
+
         ]);
 
     }
