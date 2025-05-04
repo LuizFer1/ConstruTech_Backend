@@ -18,23 +18,26 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         User::firstOrCreate(
-        //     ['email' => 'test@example.com'],
-        //     [
-        //         'name' => 'Test User',
-        //         'email_verified_at' => now(),
-        //         'password' => bcrypt('12345678'),
-        //         'remember_token' => Str::random(10),
-        //         'type' => 2,
-        //     ]
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'email_verified_at' => now(),
+                'password' => bcrypt('12345678'),
+                'remember_token' => Str::random(10),
+                'type' => 2,
+            ]
         );
 
-        User::factory(20)->create();
+        User::factory(10)->create();
 
         $this->call([
             StatusSeeder::class,
             ClienteSeeder::class,
             ColaboradorSeeder::class,
             ObraSeeder::class,
+            EtapaSeeder::class,
+            TarefaSeeder::class,
+            MidiaAndamentoObraSeeder::class
 
         ]);
 
