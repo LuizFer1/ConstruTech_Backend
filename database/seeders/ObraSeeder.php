@@ -13,6 +13,6 @@ class ObraSeeder extends Seeder
      */
     public function run(): void
     {
-        Obra::factory(600)->create();
+        Obra::factory(60)->create();
     }
 }

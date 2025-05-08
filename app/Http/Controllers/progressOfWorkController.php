@@ -6,8 +6,9 @@ use App\Models\ProgressOfWork;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Obra;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class ProgressOfWorkController extends Controller
 {
@@ -22,7 +23,7 @@ class ProgressOfWorkController extends Controller
     {
         $query = [
             'data_do_registro' => $request->query('tipo_de_midia'),
-            'id_obra' => $request->query('arquivo_da_midia'),
+            'arquivo_da_midia' => $request->query('arquivo_da_midia'),
             'id_responsavel' => $request->query('data_do_registro'),
             'descricao' => $request->query('descricao'),
             'id_obra' => $request->query('id_obra'),
@@ -119,8 +120,6 @@ class ProgressOfWorkController extends Controller
   
         $item = (new ProgressOfWork)->updateRecord($data);
 
-        return response()->json($item);
-    
         return response()->json([
             'message' => 'Relatório atualizado com sucesso',
             'data' => $item,   

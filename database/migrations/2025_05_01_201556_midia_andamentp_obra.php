@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('data_do_registro'); 
             $table->unsignedBigInteger('id_obra');
             $table->unsignedBigInteger('id_responsavel'); // ID do colaborador
+            $table->string('arquivo_da_midia')->nullable();
             $table->string('tempo_climatico')->nullable();
             $table->string('tempo_climatico_t_max')->nullable();
             $table->string('tempo_climatico_t_min')->nullable();

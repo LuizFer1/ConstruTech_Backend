@@ -16,6 +16,7 @@ public function run()
 {
     Colaborador::create([
         'nome_completo' => 'João da Silva',
+        'user_id' => 1,
         'apelido' => 'Joãozinho',
         'cpf' => '123.456.789-00',
         'cargo' => 'Analista',

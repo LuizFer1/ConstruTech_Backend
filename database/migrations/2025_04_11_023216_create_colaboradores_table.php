@@ -14,6 +14,8 @@ return new class extends Migration
     Schema::create('colaboradores', function (Blueprint $table) {
         $table->id();
         $table->string('nome_completo');
+        $table->unsignedBigInteger('user_id');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->string('apelido')->nullable();
         $table->string('cpf', 14)->unique();
         $table->string('cargo');

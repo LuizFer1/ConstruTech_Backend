@@ -17,12 +17,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('me', [AuthController::class, 'me']);
 })->middleware('logged');
 
-Route::apiResource('colaboradores', ColaboradorController::class);
+Route::apiResource('colaboradores', ColaboradorController::class)->middleware('logged');
 
 
 Route::apiResource('obras', ObraController::class)->middleware('logged');
 
-Route::apiResource('clientes', ClienteController::class);
+Route::apiResource('clientes', ClienteController::class)->middleware('logged');
 
 Route::apiResource('etapas', EtapaController::class)->middleware('logged');
 

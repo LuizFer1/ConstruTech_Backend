@@ -11,7 +11,7 @@ class Colaborador extends Model
 
     protected $fillable = [
         'nome_completo', 'apelido', 'cpf', 'cargo', 'setor', 'vinculo', 'matricula',
-        'data_admissao', 'email', 'telefone', 'cep', 'municipio', 'endereco', 'uf', 'complemento'
+        'data_admissao', 'email', 'telefone', 'cep', 'municipio', 'endereco', 'uf', 'complemento', 'user_id'
     ];
 
     public function tarefas(): BelongsToMany

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
 
         User::firstOrCreate(
 
@@ -38,8 +37,6 @@ class DatabaseSeeder extends Seeder
             ObraSeeder::class,
             EtapaSeeder::class,
             TarefaSeeder::class,
-            MidiaAndamentoObraSeeder::class
-
         ]);
 
     }
