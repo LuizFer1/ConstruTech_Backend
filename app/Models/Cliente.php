@@ -19,10 +19,14 @@ class Cliente extends Model
         'telefone',
         'endereco',
         'municipio',
-        'data_nascimento'
+        'data_nascimento',
     ];
 
     public function obras(): HasMany{
         return $this->hasMany(Obra::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

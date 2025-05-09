@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClienteController extends Controller
 {
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user = auth('api')->user();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(Cliente::paginate(), Response::HTTP_OK);
+        return response()->json(Cliente::where('user_id',$this->user->id)->get(), Response::HTTP_OK);
     }
 
     /**
@@ -22,8 +29,12 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
+        
         $data = $request->all();
-        $cliente = Cliente::create($data);
+        $cliente = new Cliente();
+        $cliente->fill($data);
+        $cliente->user()->associate($this->user);
+        $cliente->save();
         return response()->json($cliente, Response::HTTP_CREATED);
     }
 

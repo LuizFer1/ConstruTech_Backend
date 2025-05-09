@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('cpf_cnpj')->nullabe();
             $table->string('telefone')->nullable();
             $table->string('endereco')->nullable();
