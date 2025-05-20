@@ -15,6 +15,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('me', [AuthController::class, 'me']);
+    Route::post('password/send-link', [AuthController::class, 'sendResetLinkEmail']);
+    Route::post('password/reset', [AuthController::class, 'resetPassword']);
 })->middleware('logged');
 
 Route::apiResource('colaboradores', ColaboradorController::class)->middleware('logged');
@@ -44,3 +46,4 @@ Route::group(['prefix' => 'progressOfWork', 'middleware' => 'logged'], function 
 Route::apiResource('users', 'App\Http\Controllers\UserController')->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
