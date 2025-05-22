@@ -13,10 +13,11 @@ class Etapa extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected static function boot(){
+    protected static function boot()
+    {
         parent::boot();
-        static::creating(function ($etapa){
-            if($etapa->status_id){
+        static::creating(function ($etapa) {
+            if ($etapa->status_id) {
                 return;
             }
             $statusPendente = Status::where('nome', 'Pendente')->first();
@@ -35,7 +36,6 @@ class Etapa extends Model
     ];
 
     protected $with = [
-        'obra',
         'responsavel',
         'status'
     ];
@@ -53,6 +53,11 @@ class Etapa extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function tarefas()
+    {
+        return $this->hasMany(Tarefa::class);
     }
 
 }

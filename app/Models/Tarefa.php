@@ -41,7 +41,6 @@ class Tarefa extends Model
     ];
 
     protected $with = [
-        'etapa',
         'status',
         'colaboradores'
     ];

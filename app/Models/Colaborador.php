@@ -19,4 +19,9 @@ class Colaborador extends Model
         return $this->belongsToMany(Tarefa::class);
     }
 
+    public function etapas(): BelongsToMany
+    {
+        return $this->belongsToMany(Etapa::class);
+    }
+
 }

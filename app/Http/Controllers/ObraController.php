@@ -50,7 +50,8 @@ class ObraController extends Controller
      */
     public function show(Obra $obra)
     {
-        return response()->json($obra);
+        $obra->load(['etapas']);
+        return response()->json($obra, Response::HTTP_OK);
     }
 
     /**

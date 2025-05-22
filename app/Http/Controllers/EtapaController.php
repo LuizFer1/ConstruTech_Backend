@@ -56,6 +56,7 @@ class EtapaController extends Controller
      */
     public function show(Etapa $etapa)
     {
+        $etapa->load(['tarefas']);
         return response()->json($etapa);
     }
 
