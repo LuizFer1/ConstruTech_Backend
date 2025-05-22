@@ -95,7 +95,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Usuário não encontrado.'], 404);
         }
 
-        $token = Str::random(60);
+        $token = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $request->email],
             [
