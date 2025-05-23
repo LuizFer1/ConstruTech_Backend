@@ -23,12 +23,15 @@ Route::apiResource('colaboradores', ColaboradorController::class)->middleware('l
 
 
 Route::apiResource('obras', ObraController::class)->middleware('logged');
+Route::patch('obras/{obra}/arquivar', [ObraController::class, 'arquivar'])->middleware('logged');
 
 Route::apiResource('clientes', ClienteController::class)->middleware('logged');
 
 Route::apiResource('etapas', EtapaController::class)->middleware('logged');
 
 Route::apiResource('tarefas', TarefaController::class)->middleware('logged');
+Route::patch('tarefas/{tarefa}/iniciar', [TarefaController::class, 'iniciarTarefa'])->middleware('logged');
+Route::patch('tarefas/{tarefa}/concluir', [TarefaController::class, 'concluirTarefa'])->middleware('logged');
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -44,6 +47,9 @@ Route::group(['prefix' => 'progressOfWork', 'middleware' => 'logged'], function 
 });
 
 Route::apiResource('users', 'App\Http\Controllers\UserController')->only([
-    'index', 'store', 'show', 'update', 'destroy'
+    'index',
+    'store',
+    'show',
+    'update',
+    'destroy'
 ]);
-

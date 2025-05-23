@@ -29,7 +29,6 @@ class Etapa extends Model
         'nome',
         'responsavel_id',
         'obra_id',
-        'status_id',
         'data_inicio',
         'data_fim',
         'data_fim_previsto'
@@ -60,4 +59,26 @@ class Etapa extends Model
         return $this->hasMany(Tarefa::class);
     }
 
+    public function calculateAndamento()
+    {
+        $total = $this->tarefas->count();
+        $andamento = 0;
+
+        if ($total > 0) {
+            $concluidas = $this->tarefas()
+                ->whereHas('status', function ($query) {
+                    $query->where('nome', 'Concluída');
+                })
+                ->count();
+
+            $andamento = ($concluidas / $total) * 100;
+        }
+        $this->andamento = $andamento;
+        if ($andamento == 100) {
+            $statusConcluida = Status::where('nome', 'Concluída')->get()->first();
+            $this->status()->associate($statusConcluida);
+        }
+        $this->save();
+        $this->obra->calculateAndamento();
+    }
 }

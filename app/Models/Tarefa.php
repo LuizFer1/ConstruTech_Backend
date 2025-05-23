@@ -31,7 +31,6 @@ class Tarefa extends Model
         'titulo',
         'descricao',
         'etapa_id',
-        'status_id',
         'data_inicio',
         'data_fim',
         'data_fim_previsto',

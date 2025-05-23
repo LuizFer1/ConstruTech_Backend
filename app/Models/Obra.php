@@ -33,8 +33,6 @@ class Obra extends Model
         'responsavel_id',
         'construtor_id',
         'cliente_id',
-        'status_id',
-        'andamento',
         'data_inicio',
         'data_fim_previsto',
         'data_fim',
@@ -79,4 +77,26 @@ class Obra extends Model
         return $this->hasManyThrough(Tarefa::class, Etapa::class);
     }
 
+    public function calculateAndamento()
+    {
+        $total = $this->etapas->count();
+        $andamento = 0;
+
+        if ($total > 0) {
+            $concluidas = $this->etapas()
+                ->whereHas('status', function ($query) {
+                    $query->where('nome', 'Concluída');
+                })
+                ->count();
+
+            $andamento = ($concluidas / $total) * 100;
+        }
+        $this->andamento = $andamento;
+        if($andamento == 100){
+            $statusConcluida = Status::where('nome', 'Concluída');
+            $this->status()->associate($statusConcluida);
+        }
+        $this->save();
+
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Obra;
 use App\Http\Requests\UpdateObraRequest;
 use App\Http\Requests\StoreObraRequest;
+use App\Models\Status;
 
 class ObraController extends Controller
 {
@@ -50,6 +51,9 @@ class ObraController extends Controller
      */
     public function show(Obra $obra)
     {
+        if($obra->construtor_id != $this->user->id){
+            return response()->json(['message' => 'Você não tem permissão para visualizar essa obra'], Response::HTTP_FORBIDDEN);
+        }
         $obra->load(['etapas']);
         return response()->json($obra, Response::HTTP_OK);
     }
@@ -60,7 +64,7 @@ class ObraController extends Controller
     public function update(UpdateObraRequest $request, Obra $obra)
     {
         if ($obra->contrutor_id != $this->user->id) {
-            return response()->json(['message' => 'Você não tem permissão para editar esta obra.'], 403);
+            return response()->json(['message' => 'Você não tem permissão para editar esta obra.'], Response::HTTP_FORBIDDEN);
         };
         $data = $request->all();
         $obra->update($data);
@@ -75,9 +79,22 @@ class ObraController extends Controller
     public function destroy(Obra $obra)
     {
         if ($obra->contrutor_id != $this->user->id) {
-            return response()->json(['message' => 'Você não tem permissão para editar esta obra.'], 403);
+            return response()->json(['message' => 'Você não tem permissão para apagar esta obra.'], Response::HTTP_FORBIDDEN);
         };
         $obra->delete();
         return response()->json($obra, Response::HTTP_OK);
+    }
+
+    public function arquivar(Obra $obra){
+        if ($obra->contrutor_id != $this->user->id) {
+            return response()->json(['message' => 'Você não tem permissão para alterar esta obra.'], Response::HTTP_FORBIDDEN);
+        };
+        $statusConcluida = Status::whereLike('nome', 'Concluída')->get()->first();
+        if($obra->status->id != $statusConcluida->id){
+            return response()->json(['message' => 'Você não pode arquivar uma obra que não está concluída'], Response::HTTP_BAD_REQUEST);
+        }
+        $statusArquivada = Status::whereLike('nome', 'Arquivada')->get()->first();
+        $obra->status()->associate($statusArquivada);
+        $obra->save();
     }
 }
