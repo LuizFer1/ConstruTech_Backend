@@ -31,7 +31,8 @@ class UpdateTarefaRequest extends FormRequest
             'data_fim_previsto' => 'date',
             'orcamento' => 'min:0|integer',
             'andamento' => 'min:0|max:100',
-            'cor' => 'color'
+            'cor' => 'color',
+            'colaboradores' => 'array',
         ];
     }
 }

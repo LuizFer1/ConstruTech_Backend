@@ -49,10 +49,24 @@ class TarefaController extends Controller
         $data = $request->all();
         $statusAndamento = Status::whereLike('nome', 'Em Andamento')->get()->first();
         $etapa = Etapa::findOrFail($data['etapa_id']);
+        $colaboradoresId = $data['colaboradores'] ?? [];
+        if (count($colaboradoresId) > 0) {
+            $existentes = $etapa->obra->colaboradores()->pluck('id');
+            if (count($existentes) == 0) {
+                return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
+            }
+            foreach ($colaboradoresId as $colaboradorId) {
+                if (!$existentes->contains($colaboradorId)) {
+                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence a obra."], Response::HTTP_BAD_REQUEST);
+                }
+            }
+        }
+
         if ($etapa->obra->construtor_id != $this->user->id) {
             return response()->json(['message' => 'Você não tem permissão para criar tarefas nesta etapa.'], Response::HTTP_FORBIDDEN);
         }
         $tarefa = Tarefa::create($data);
+        $tarefa->colaboradores()->sync($colaboradoresId);
         $etapa->status()->associate($statusAndamento);
         $etapa->obra->status()->associate($statusAndamento);
         return response()->json($tarefa, Response::HTTP_CREATED);
@@ -76,8 +90,21 @@ class TarefaController extends Controller
         if ($obra->construtor_id != $this->user->id) {
             return response()->json(['message' => 'Você não tem permissão para editar tarefas desta obra.'], Response::HTTP_FORBIDDEN);
         }
+        $colaboradoresId = $data['colaboradores'] ?? [];
+        if (count($colaboradoresId) > 0) {
+            $existentes = $obra->colaboradores()->pluck('id');
+            if (count($existentes) == 0) {
+                return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
+            }
+            foreach ($colaboradoresId as $colaboradorId) {
+                if (!$existentes->contains($colaboradorId)) {
+                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence a obra."], Response::HTTP_BAD_REQUEST);
+                }
+            }
+        }
         $data = $request->all();
         $tarefa->update($data);
+        $tarefa->colaboradores()->sync($colaboradoresId);
         $tarefa->save();
         $tarefa->refresh();
         return response()->json($tarefa, Response::HTTP_OK);
@@ -107,11 +134,11 @@ class TarefaController extends Controller
         $tarefa->status()->associate($statusAndamento);
         $tarefa->etapa->status()->associate($statusAndamento);
         $tarefa->etapa->obra->status()->associate($statusAndamento);
-        if($tarefa->etapa->obra->data_inicio == null) {
+        if ($tarefa->etapa->obra->data_inicio == null) {
             $tarefa->etapa->obra->data_inicio = now();
         }
         $tarefa->etapa->obra->save();
-        if($tarefa->etapa->data_inicio == null) {
+        if ($tarefa->etapa->data_inicio == null) {
             $tarefa->etapa->data_inicio = now();
         }
         $tarefa->etapa->save();
