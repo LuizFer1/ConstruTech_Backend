@@ -105,6 +105,16 @@ class TarefaController extends Controller
 
         $statusAndamento = Status::where('nome', 'Em Andamento')->first();
         $tarefa->status()->associate($statusAndamento);
+        $tarefa->etapa->status()->associate($statusAndamento);
+        $tarefa->etapa->obra->status()->associate($statusAndamento);
+        if($tarefa->etapa->obra->data_inicio == null) {
+            $tarefa->etapa->obra->data_inicio = now();
+        }
+        $tarefa->etapa->obra->save();
+        if($tarefa->etapa->data_inicio == null) {
+            $tarefa->etapa->data_inicio = now();
+        }
+        $tarefa->etapa->save();
         $tarefa->save();
 
         // Atualizar andamento da etapa
