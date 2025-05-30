@@ -53,11 +53,11 @@ class TarefaController extends Controller
         if (count($colaboradoresId) > 0) {
             $existentes = $this->user->colaboradores()->pluck('id');
             if (count($existentes) == 0) {
-                return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
+                return response()->json(['message' => 'Sua equipe não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
             }
             foreach ($colaboradoresId as $colaboradorId) {
                 if (!$existentes->contains($colaboradorId)) {
-                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence a obra."], Response::HTTP_BAD_REQUEST);
+                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence a sua equipe."], Response::HTTP_BAD_REQUEST);
                 }
             }
         }
@@ -65,7 +65,11 @@ class TarefaController extends Controller
         if ($etapa->obra->construtor_id != $this->user->id) {
             return response()->json(['message' => 'Você não tem permissão para criar tarefas nesta etapa.'], Response::HTTP_FORBIDDEN);
         }
-        $tarefa = Tarefa::create($data);
+        $tarefa = new Tarefa();
+        $tarefa->fill($data);
+        $tarefa->etapa()->associate($etapa);
+        $tarefa->save();
+        $etapa->tarefas()->save($tarefa);
         $tarefa->colaboradores()->sync($colaboradoresId);
         $etapa->status()->associate($statusAndamento);
         $etapa->obra->status()->associate($statusAndamento);
@@ -94,11 +98,11 @@ class TarefaController extends Controller
         if (count($colaboradoresId) > 0) {
             $existentes = $this->user->colaboradores()->pluck('id');
             if (count($existentes) == 0) {
-                return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
+                return response()->json(['message' => 'Equipe não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
             }
             foreach ($colaboradoresId as $colaboradorId) {
                 if (!$existentes->contains($colaboradorId)) {
-                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence a obra."], Response::HTTP_BAD_REQUEST);
+                    return response()->json(['message' => "Colaborador id $colaboradorId não pertence à sua equipe."], Response::HTTP_BAD_REQUEST);
                 }
             }
         }

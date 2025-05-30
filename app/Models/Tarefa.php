@@ -30,7 +30,6 @@ class Tarefa extends Model
     protected $fillable = [
         'titulo',
         'descricao',
-        'etapa_id',
         'data_inicio',
         'data_fim',
         'data_fim_previsto',
