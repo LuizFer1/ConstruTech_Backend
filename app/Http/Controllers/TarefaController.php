@@ -107,7 +107,7 @@ class TarefaController extends Controller
             }
         }
         $data = $request->all();
-        $tarefa->update($data);
+        $tarefa->fill($data);
         $tarefa->colaboradores()->sync($colaboradoresId);
         $tarefa->save();
         $tarefa->refresh();
