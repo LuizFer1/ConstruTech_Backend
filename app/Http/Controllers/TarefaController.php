@@ -51,7 +51,7 @@ class TarefaController extends Controller
         $etapa = Etapa::findOrFail($data['etapa_id']);
         $colaboradoresId = $data['colaboradores'] ?? [];
         if (count($colaboradoresId) > 0) {
-            $existentes = $etapa->obra->colaboradores()->pluck('id');
+            $existentes = $this->user->colaboradores()->pluck('id');
             if (count($existentes) == 0) {
                 return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
             }
@@ -92,7 +92,7 @@ class TarefaController extends Controller
         }
         $colaboradoresId = $data['colaboradores'] ?? [];
         if (count($colaboradoresId) > 0) {
-            $existentes = $obra->colaboradores()->pluck('id');
+            $existentes = $this->user->colaboradores()->pluck('id');
             if (count($existentes) == 0) {
                 return response()->json(['message' => 'Obra não possui colaboradores.'], Response::HTTP_BAD_REQUEST);
             }

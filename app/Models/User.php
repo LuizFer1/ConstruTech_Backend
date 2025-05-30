@@ -62,4 +62,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return ['type' => $this->type];
     }
+
+    public function colaboradores()
+    {
+        return $this->hasMany(Colaborador::class, 'user_id');
+    }
 }

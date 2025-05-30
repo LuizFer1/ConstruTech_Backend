@@ -26,7 +26,7 @@ public function store(Request $request)
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users|max:255',
-            'cpf' => 'required|cpf_ou_cnpj',
+            'cpf' => 'required|cpf_ou_cnpj|unique:users|max:14',
             'phone' => 'required|string|unique:users|max:255',
             'password' => 'required|string|min:8',
             'type' => 'required|integer|in:1,2',
