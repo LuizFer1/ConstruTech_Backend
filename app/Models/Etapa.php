@@ -77,6 +77,7 @@ class Etapa extends Model
         if ($andamento == 100) {
             $statusConcluida = Status::where('nome', 'Concluída')->get()->first();
             $this->status()->associate($statusConcluida);
+            $this->data_fim = now();
         }
         $this->save();
         $this->obra->calculateAndamento();

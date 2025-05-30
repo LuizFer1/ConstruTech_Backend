@@ -163,6 +163,7 @@ class TarefaController extends Controller
 
         $statusConcluido = Status::where('nome', 'Concluída')->first();
         $tarefa->status()->associate($statusConcluido);
+        $tarefa->data_fim = now();
         $tarefa->save();
 
         // Atualizar andamento da etapa

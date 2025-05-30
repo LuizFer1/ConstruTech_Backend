@@ -95,6 +95,7 @@ class Obra extends Model
         if($andamento == 100){
             $statusConcluida = Status::where('nome', 'Concluída');
             $this->status()->associate($statusConcluida);
+            $this->data_fim = now();
         }
         $this->save();
 
