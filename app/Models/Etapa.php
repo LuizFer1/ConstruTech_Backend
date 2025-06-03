@@ -31,7 +31,8 @@ class Etapa extends Model
         'obra_id',
         'data_inicio',
         'data_fim',
-        'data_fim_previsto'
+        'data_fim_previsto',
+        'orcamento'
     ];
 
     protected $with = [
@@ -81,5 +82,15 @@ class Etapa extends Model
         }
         $this->save();
         $this->obra->calculateAndamento();
+    }
+
+    public function getOrcamentoAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setOrcamentoAttribute($value)
+    {
+        $this->attributes['orcamento'] = (int) ($value * 100);
     }
 }

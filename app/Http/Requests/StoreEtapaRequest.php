@@ -27,7 +27,8 @@ class StoreEtapaRequest extends FormRequest
             'obra_id' => 'required',
             'data_inicio' => 'date|required',
             'data_fim' => 'date',
-            'data_fim_previsto' => 'date'
+            'data_fim_previsto' => 'date',
+            'orcamento' => 'numeric'
         ];
     }
 }
