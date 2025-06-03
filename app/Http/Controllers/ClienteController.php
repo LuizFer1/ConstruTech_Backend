@@ -21,7 +21,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return response()->json(Cliente::where('user_id',$this->user->id)->get(), Response::HTTP_OK);
+        return response()->json(Cliente::where('user_id',$this->user->id)->paginate(), Response::HTTP_OK);
     }
 
     /**
@@ -29,7 +29,7 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-        
+
         $data = $request->all();
         $cliente = new Cliente();
         $cliente->fill($data);
