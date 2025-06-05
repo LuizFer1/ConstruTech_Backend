@@ -35,7 +35,6 @@ Route::patch('tarefas/{tarefa}/concluir', [TarefaController::class, 'concluirTar
 Route::patch('tarefas/{tarefa}/pendente', [TarefaController::class, 'pendente'])->middleware('logged');
 
 
-
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
