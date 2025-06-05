@@ -39,11 +39,11 @@ Route::get('/user', function (Request $request) {
 
 
 Route::group(['prefix' => 'progressOfWork', 'middleware' => 'logged'], function () {
-    Route::get('/', 'App\Http\Controllers\ProgressOfWorkController@index');
-    Route::get('/{id}', 'App\Http\Controllers\ProgressOfWorkController@show');
-    Route::post('/', 'App\Http\Controllers\ProgressOfWorkController@store');
-    Route::put('/{id}', 'App\Http\Controllers\ProgressOfWorkController@update');
-    Route::delete('/{id}', 'App\Http\Controllers\ProgressOfWorkController@destroy');
+    Route::get('/', [ProgressOfWorkController::class, 'index']);
+    Route::get('/{id}', [ProgressOfWorkController::class, 'show']);
+    Route::post('/', [ProgressOfWorkController::class, 'store']);
+    Route::put('/{id}', [ProgressOfWorkController::class, 'update']);
+    Route::delete('/{id}', [ProgressOfWorkController::class, 'destroy']);
 });
 
 Route::apiResource('users', 'App\Http\Controllers\UserController')->only([

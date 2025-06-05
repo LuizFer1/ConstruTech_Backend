@@ -128,6 +128,13 @@ class ColaboradorController extends Controller
             return response()->json(['message' => 'Colaborador não encontrado'], 404);
         }
 
+        // Verifica se há tarefas associadas
+        if ($colaborador->tarefas()->count() > 0) {
+            return response()->json([
+                'error' => 'Não é possível excluir: existem tarefas associadas a este colaborador.'
+            ], 409);
+        }
+
         $colaborador->delete();
 
         return response()->json(['message' => 'Colaborador deletado com sucesso']);
