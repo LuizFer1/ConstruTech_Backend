@@ -32,6 +32,9 @@ Route::apiResource('etapas', EtapaController::class)->middleware('logged');
 Route::apiResource('tarefas', TarefaController::class)->middleware('logged');
 Route::patch('tarefas/{tarefa}/iniciar', [TarefaController::class, 'iniciarTarefa'])->middleware('logged');
 Route::patch('tarefas/{tarefa}/concluir', [TarefaController::class, 'concluirTarefa'])->middleware('logged');
+Route::patch('tarefas/{tarefa}/pendente', [TarefaController::class, 'pendente'])->middleware('logged');
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();

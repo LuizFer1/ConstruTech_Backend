@@ -171,4 +171,28 @@ class TarefaController extends Controller
 
         return response()->json($tarefa, Response::HTTP_OK);
     }
+
+    public function pendente(Tarefa $tarefa)
+{
+    $obra = $tarefa->etapa->obra;
+
+    if ($obra->construtor_id != $this->user->id) {
+        return response()->json(['message' => 'Você não tem permissão para alterar esta tarefa.'], Response::HTTP_FORBIDDEN);
+    }
+
+    $statusPendente = Status::where('nome', 'Pendente')->first();
+
+    if (!$statusPendente) {
+        return response()->json(['message' => 'Status "Pendente" não encontrado.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    $tarefa->status()->associate($statusPendente);
+    $tarefa->save();
+
+    // Atualizar andamento da etapa
+    $tarefa->etapa->calculateAndamento();
+
+    return response()->json($tarefa, Response::HTTP_OK);
+}
+
 }
